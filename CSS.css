@@ -1,0 +1,84 @@
+li {
+  list-style-type: none;
+  transform-style: preserve-3d;
+}
+ol {
+  margin: 0;
+  padding: 0;
+  transform-style: preserve-3d;
+}
+div {
+}
+body {
+  background: #000;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 500px;
+}
+#autumn {
+  position: absolute;  
+  .maple {
+    @for $i from 0 through 30 {
+      $R: random(255);
+      $G: random(100);
+      $B: random(80);
+      $color: rgba($R, $G, $B, 1);
+      &:nth-child(#{$i + 1}) {
+        position: absolute;
+        top: #{random(600) - 300}px;
+        left: #{random(200) - 100}px;
+        transform-origin: #{random(300) - 200}px #{random(400) - 200}px;
+        transform: translateY(-2000px);
+        animation: rotate #{random(5000) + 10000}ms #{random(3000)}ms linear infinite;
+        .leaves {
+          .leave_wrapper {
+            transform: rotateX(#{random(360)}deg) rotateY(#{random(360)}deg) rotateZ(#{random(360)}deg);
+            &::before {
+              content: '';
+              position: absolute;
+              left: 48px;
+              border-bottom: 40px solid rgba($R, $G, $B, 1);
+              border-right: 5px solid transparent;
+            }
+            .leave {
+              position: absolute;
+              
+              border-top: 10px solid transparent;
+              border-bottom: 10px solid transparent;
+              transform-origin: 50px 10px;              
+              @for $j from 0 through 7 {
+                &:nth-child(#{$j + 1}) {
+                  border-right: 50px solid rgba($R + $j, $G + $j * 10, $B + $j * random(10), 1);
+                  transform: rotateZ($j * 40 - 30deg) rotateY($j * 6deg) rotateX($j * 3deg);
+                }
+                &:nth-child(6n + 1) {
+                  border-right-width: 25px;
+                  width: 25px;
+                }
+                &:nth-child(4n + 2) {
+                  border-right-width: 35px;
+                  width: 15px;
+                }
+                &:nth-child(6n + 3) {
+                  border-right-width: 45px;
+                  width: 5px;
+                }
+              }
+            }
+          }
+        }
+      }
+    } 
+  }
+}
+@keyframes rotate {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateY(-600px);
+  }
+  100% {
+    transform: rotateX(360 * 2deg) rotateY(360deg) rotateZ(360 * 2deg) translateY(600px);
+  }
+}
